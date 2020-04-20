@@ -125,6 +125,8 @@ Thumbs.db
 /pcre8.dll
 /zlib.dll
 
+# CMakeFiles
+/CMakeFiles/
 
 # Ignore .vscode files
 .vscode/*
