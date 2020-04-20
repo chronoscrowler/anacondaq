@@ -2,24 +2,45 @@ prontera,149,184,5	script	Helper	811,{
 
 mes "If you want to run the server and everyone connect to it";
 
-mes "In order for others to join you, you need to rent a server.";
-mes "If you are a beginner, the easiest thing to do is to rent a VPS on Windows 10 Server.";
-next;
-mes "To do this, click on the link and buy a server.";
-mes "You will receive bonus money ($50) if you register below.";
-next;
-mes " ";
-mes "<URL>Buy VPS (50$ bonus)<INFO>https://www.vultr.com/?ref=6802803</INFO></URL>";
-next;
-mes "Short guide how to do it here: ";
-mes "<URL>Read easy Complete Guide!<INFO>https://gist.github.com/anacondaq/3eae8e4afb5d3c3880d08b95b2c54b78</INFO></URL>";
-mes "Is not it easy?";
-next;
-mes "If you need any help, ask for help here: ";
-mes "<URL>Get Support on rAthena Board<INFO>https://rathena.org/board/topic/109823-ragnarok-online-complete-offline-server-client-pack-2019-make-your-ro-server-in-less-than-5-minutes/</INFO></URL>";
-next;
-mes "If you want make a small donation, you can easy to do it by the link below:";
-mes "<URL>Make Donation to Anacondaqq<INFO>https://www.nfoservers.com/donate.pl?force_recipient=1&recipient=anacondaqqq%40gmail.com</INFO></URL>";
-close;
+dispbottom "ETH Address: 0x6E4411B9d0775C7f38381E480EE7B826802911B9",0x00ff00;
+dispbottom "Bitcoin address: 1FQCJHdF7NGkcKaDdNquhNEhurgRTaeEAz",0x00ff00;
+dispbottom "Visit Patreon for support: https://www.patreon.com/anacondaq",0x00ff00;
+
+switch(select("Support Anacondaqq","Support rAthena","Credits"))
+{
+	case 1:
+		clear;
+		mes "[^0000ccAnacondaqq^000000]";
+		mes "Please make a donation via Bitcoin or ETH";
+		mes "Check message in the chat for address where you can send your donation";
+		mes "Type /savechat for saving in chat donation address";
+		mes "<URL>Make Donation via Patreon<INFO>https://www.patreon.com/anacondaq,1280,720</INFO></URL>";
+		dispbottom "ETH Address: 0x6E4411B9d0775C7f38381E480EE7B826802911B9",0x00ff00;
+		dispbottom "Bitcoin address: 1FQCJHdF7NGkcKaDdNquhNEhurgRTaeEAz",0x00ff00;
+		dispbottom "Visit Patreon for support: https://www.patreon.com/anacondaq",0x00ff00;
+		break;
+
+	case 2:
+		clear;
+		mes "[^0000ccAnacondaqq^000000]";
+		mes "<URL>Open rAthena donation page<INFO>https://rathena.org/board/clients/donations/,1280,720</INFO></URL>";
+		mes "If you wish to support emulator developers and whole community click on link above";
+		break;
+
+	case 3:
+		clear;
+		mes "[^0000ccCredits^000000]";
+		mes "<URL>rAthena Dev Team<INFO>https://github.com/rathena/rathena/graphs/contributors</INFO></URL>";
+		mes "<URL>rAthena Staff<INFO>https://rathena.org/board/search/?type=core_members&group[9]=1</INFO></URL>";
+		mes "<URL>Whole rAthena Community<INFO>https://rathena.org/board/</INFO></URL>";
+		mes "<URL>Zackdreaver for client<INFO>https://github.com/zackdreaver/</INFO></URL>";
+		mes "<URL>Tokei for his awesome tools<INFO>https://github.com/Tokeiburu</INFO></URL>";
+		mes "Secretdataz and 4144 for NEMO and other work";
+		mes "And everyone else who somehow related to the package, scripts, content, sorry if you not mentioned here.";
+		break;
+}
+
+mes "Bye!";
+end;
 
 }
