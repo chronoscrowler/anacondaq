@@ -86,7 +86,7 @@ char_del_delay: 0
 // - This config only works for clients that send 0x0068 or 0x01fb for delete request.
 // - Use langtype 1 for newer clients (2013+), to use 0x01fb.
 // - Clients that are not using 0x0068 or 0x01fb, only use birthdate (YYMMDD) as default.
-char_del_option: 3
+char_del_option: 1
 
 // NOTE: Requires client 2011-03-09aragexeRE or newer.
 // A window is opened before you can select your character and you will have to enter a pincode by using only your mouse.
