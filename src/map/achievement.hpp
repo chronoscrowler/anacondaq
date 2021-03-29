@@ -24,21 +24,23 @@ enum e_achievement_group {
 	AG_ADVENTURE,
 	AG_BABY,
 	AG_BATTLE,
-	AG_CHATTING,
-	AG_CHATTING_COUNT,
-	AG_CHATTING_CREATE,
-	AG_CHATTING_DYING,
+	AG_CHAT,
+	AG_CHAT_COUNT,
+	AG_CHAT_CREATE,
+	AG_CHAT_DYING,
 	AG_EAT,
 	AG_GET_ITEM,
 	AG_GET_ZENY,
 	AG_GOAL_ACHIEVE,
 	AG_GOAL_LEVEL,
 	AG_GOAL_STATUS,
+	AG_HEAR,
 	AG_JOB_CHANGE,
 	AG_MARRY,
 	AG_PARTY,
-	AG_ENCHANT_FAIL,
-	AG_ENCHANT_SUCCESS,
+	AG_REFINE_FAIL,
+	AG_REFINE_SUCCESS,
+	AG_SEE,
 	AG_SPEND_ZENY,
 	AG_TAMING,
 	AG_MAX
@@ -63,12 +65,6 @@ enum e_achievement_info {
 	ACHIEVEINFO_MAX,
 };
 
-enum e_title_table : uint16 {
-	TITLE_NONE = 0,
-	TITLE_BASE = 1000,
-	TITLE_MAX = 1046,
-};
-
 struct achievement_target {
 	int mob;
 	int count;
@@ -83,8 +79,7 @@ struct s_achievement_db {
 	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
-		t_itemid nameid;
-		unsigned short amount;
+		unsigned short nameid, amount;
 		struct script_code *script;
 		uint32 title_id;
 		ach_reward();
@@ -99,40 +94,23 @@ struct s_achievement_db {
 
 class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
 private:
-	std::vector<uint32> achievement_mobs; // Avoids checking achievements on every mob killed
+	// Avoids checking achievements on every mob killed
+	std::vector<uint32> achievement_mobs;
 
 public:
-	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 2 ){
+	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 1 ){
 
 	}
 
 	void clear();
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode( const YAML::Node& node );
-	void loadingFinished();
 
 	// Additional
 	bool mobexists(uint32 mob_id);
 };
 
 extern AchievementDatabase achievement_db;
-
-struct s_achievement_level{
-	uint16 level;
-	uint16 points;
-};
-
-class AchievementLevelDatabase : public TypesafeYamlDatabase<uint16, s_achievement_level>{
-public:
-	AchievementLevelDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_LEVEL_DB", 1 ){
-
-	}
-
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
-};
-
-extern AchievementLevelDatabase achievement_level_db;
 
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
@@ -142,10 +120,8 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id);
 void achievement_free(struct map_session_data *sd);
 int achievement_check_progress(struct map_session_data *sd, int achievement_id, int type);
 int *achievement_level(struct map_session_data *sd, bool flag);
-bool achievement_check_condition(struct script_code* condition, struct map_session_data* sd);
 void achievement_get_titles(uint32 char_id);
 void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
-int achievement_update_objective_sub(block_list *bl, va_list ap);
 void achievement_read_db(void);
 void achievement_db_reload(void);
 
