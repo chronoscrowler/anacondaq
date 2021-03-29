@@ -15,7 +15,7 @@ ipban_db_db: ragnarok
 ipban_codepage:
 
 //VPS
-login_server_ip: 45.130.229.72
+login_server_ip: 156.67.222.147
 login_server_port: 3306
 login_server_id: ragnarok
 login_server_pw: ragnarok
@@ -54,7 +54,7 @@ log_codepage:
 log_login_db: loginlog
 
 //VPS
-log_db_ip: 45.130.229.72
+log_db_ip: 156.67.222.147
 log_db_port: 3306
 log_db_id: ragnarok
 log_db_pw: ragnarok
