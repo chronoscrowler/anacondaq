@@ -428,8 +428,6 @@ int send_from_fifo(int fd)
 
 	if( len > 0 )
 	{
-		session[fd]->wdata_tick = last_tick;
-
 		// some data could not be transferred?
 		// shift unsent data to the beginning of the queue
 		if( (size_t)len < session[fd]->wdata_size )
@@ -589,7 +587,6 @@ int make_listen_bind(uint32 ip, uint16 port)
 	create_session(fd, connect_client, null_send, null_parse);
 	session[fd]->client_addr = 0; // just listens
 	session[fd]->rdata_tick = 0; // disable timeouts on this socket
-	session[fd]->wdata_tick = 0;
 
 	return fd;
 }
@@ -730,7 +727,6 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	session[fd]->func_send  = func_send;
 	session[fd]->func_parse = func_parse;
 	session[fd]->rdata_tick = last_tick;
-	session[fd]->wdata_tick = last_tick;
 	return 0;
 }
 
@@ -1625,7 +1621,7 @@ void socket_init(void)
 
 bool session_isValid(int fd)
 {
-	return ( fd > 0 && fd < MAXCONN && session[fd] != nullptr );
+	return ( fd > 0 && fd < MAXCONN && session[fd] != NULL );
 }
 
 bool session_isActive(int fd)
@@ -1733,7 +1729,7 @@ void send_shortlist_do_sends()
 
 			// If the session still exists, is not eof and has things left to
 			// be sent from it we'll re-add it to the shortlist.
-			if( session_isActive(fd) && session[fd]->wdata_size )
+			if( session[fd] && !session[fd]->flag.eof && session[fd]->wdata_size )
 				send_shortlist_add_fd(fd);
 		}
 	}
