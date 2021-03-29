@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Job Master
+//= Job Master sarah_hero3_2
 //===== Description: =========================================
 //= A fully functional job changer.
 //===== Additional Comments: =================================
@@ -15,8 +15,9 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,169,228,3	script	Job Master	4_CHN_GVG_01,{
+final_dest,99,25,3	script	Queen Puddingcess#1	3055,{
 function Get_Job_Equip;
+cutin "puddingcess_cutin",2;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
 function	Require_Level	{
@@ -32,7 +33,9 @@ function	Require_Level	{
 				((.@jlvl > 0) ? "and " : "") : "") +
 			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 more job levels " : "") +
 			"to continue.";
+		cutin "",255;
 		close;
+		
 	}
 	return;
 }
@@ -97,6 +100,7 @@ function	Check_Riding	{
 			((checkriding()) ? "Peco" : "") +
 			((ismounting()) ? "mount" : "") +
 			" before proceeding.";
+		cutin "",255;
 		close;
 	}
 	return;
@@ -104,6 +108,7 @@ function	Check_Riding	{
 function	Check_SkillPoints	{
 	if (.SkillPointCheck && SkillPoint) {
 		mes "Please use all your skill points before proceeding.";
+		cutin "",255;
 		close;
 	}
 	return;
@@ -214,6 +219,7 @@ function	Job_Options	{
 				break;
 			default:
 				mes "An error has occurred.";
+				cutin "",255;
 				close;
 		}
 	} else if( Is_First_Cls(.@eac) || 				// First Class
@@ -255,6 +261,7 @@ function	Job_Menu	{
 		.@opt_cnt =  getarraysize(getarg(0));
 		if( .@opt_cnt <= 0 ) {
 			mes "No more jobs are available.";
+			cutin "",255;
 			close;
 		}
 
@@ -320,6 +327,7 @@ function	Job_Change	{
 		callfunc "F_GetPlatinumSkills";
 	if (.GetJobEquip)
 		Get_Job_Equip();
+	cutin "",255;
 	close; // Always closes after the change
 }
 
@@ -330,6 +338,7 @@ function	Confirm_Change	{
 	if( .@class < 0 ) {
 		mes "Unknown Class Error.";
 		close;
+		cutin "",255;
 	}
 	mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";
 	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
@@ -341,6 +350,7 @@ function	Confirm_Change	{
 		Job_Change(.@class);
 	}
 	if (!.@back)
+		cutin "",255;
 		close; // "Cancel" pressed
 	return;
 }
@@ -454,7 +464,7 @@ OnInit:
 	.NPCName$ = "[Job Master]";
 	
 	// Settings
-	.ThirdClass = false;			// Enable third classes?
+	.ThirdClass = true;			// Enable third classes?
 	.RebirthClass = true;			// Enable rebirth classes?
 	.SecondExpanded = false;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
 	.BabyNovice = true;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
@@ -488,3 +498,93 @@ OnInit:
 	end;
 }
 
+final_dest,98,25,3	script	Queen Puddingcess#2	3055,{
+cutin "puddingcess_cutin",2;
+mes "[Job Master]";
+if (Class == Job_Super_Novice){
+mes "Do you want to change into ^0055FFEX Super Novice^000000 class?";
+menu " ~ Change into ^0055FFEX Super Novice^000000 class",esup," ~ ^777777Cancel^000000",pudexit;
+}
+else {
+mes "No more jobs are available.";
+close2;
+cutin "",255;
+instance_warpall instance_mapname("1@gef"),120,61;
+end;
+}
+
+esup:
+next;
+atcommand "@job 4190";
+mes "[Job Master]";
+mes "You are now an ^0055FFEX Super Novice^000000";
+close2;
+cutin "",255;
+instance_warpall instance_mapname("1@gef"),120,61;
+end;
+
+pudexit:
+next;
+close;
+end;
+}
+
+final_dest,100,25,3	script	Queen Puddingcess#3	3055,{
+cutin "puddingcess_cutin",2;
+mes "[Job Master]";
+mes "Do you want to change into ^0055FFRebellion^000000 class?";
+menu " ~ Change into ^0055FFRebellion^000000 class",rebel," ~ ^777777Cancel^000000",pudexit2;
+
+rebel:
+next;
+atcommand "@job 4215";
+mes "[Job Master]";
+mes "You are now a ^0055FFRebellion^000000";
+close2;
+cutin "",255;
+instance_warpall instance_mapname("1@gef"),120,61;
+end;
+
+pudexit2:
+next;
+close;
+end;
+}
+
+final_dest,101,25,3	script	Queen Puddingcess#4	3055,{
+cutin "puddingcess_cutin",2;
+mes "[Job Master]";
+if (Sex == 1){
+mes "Do you want to change into ^0055FFKagerou^000000 class?";
+menu " ~ Change into ^0055FFKagerou^000000 class",kagerou," ~ ^777777Cancel^000000",pudexit3;
+}
+else {
+mes "Do you want to change into ^0055FFOboro^000000 class?";
+menu " ~ Change into ^0055FFOboro^000000 class",oboro," ~ ^777777Cancel^000000",pudexit3;
+}
+
+kagerou:
+next;
+atcommand "@job 4211";
+mes "[Job Master]";
+mes "You are now a ^0055FFKagerou^000000";
+close2;
+cutin "",255;
+instance_warpall instance_mapname("1@gef"),120,61;
+end;
+
+oboro:
+next;
+atcommand "@job 4212";
+mes "[Job Master]";
+mes "You are now an ^0055FFOboro^000000";
+close2;
+cutin "",255;
+instance_warpall instance_mapname("1@gef"),120,61;
+end;
+
+pudexit3:
+next;
+close;
+end;
+}

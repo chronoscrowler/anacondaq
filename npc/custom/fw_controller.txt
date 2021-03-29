@@ -1,26 +1,8 @@
-//===== rAthena Script =======================================
-//= Euphy's WOE Controller, Redux
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.5j
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: =========================================
-//= A controller for War of Emperium designed for
-//= simplicity and ease of use.
-//= Many concepts taken from ToastOfDoom's script,
-//= and "rewards" function originally by Goddameit.
-//===== Additional Comments: =================================
-//= Be sure to disable the default agit controllers!
-//== npc\guild\agit_controller.txt
-//== npc\guild2\agit_start_se.txt
-//= Reward Rotation Added by JeffSaber
 //============================================================
 // Information NPC
 //============================================================
-prontera,155,285,4	script	WOE Information	4_PD_TYRA,{
-	doevent "WOE_CONTROL::OnMenu";
+jupe_area2,139,0,3	script	FW Information	4_PD_TYRA,{
+	doevent "FW_CONTROL::OnMenu";
 	end;
 OnAgitStart:
 	while(agitcheck()) {
@@ -31,7 +13,7 @@ OnAgitStart:
 }
 // Script Core
 //============================================================
--	script	WOE_CONTROL	-1,{
+-	script	FW_CONTROL	-1,{
 function Disp_Owner; function Add_Zero;
 OnInit:
 // -----------------------------------------------------------
@@ -42,7 +24,6 @@ OnInit:
 	set .NoOwner,0; 		// Automatically kick players from unconquered castles outside of WOE? (1:yes / 0:no)
 	set .ExitWarp,0;		// Warp all players from castles when WOE ends? (1:yes / 0:no)
 	set .GMAccess,99;		// GM level required to access Session Manager.
-	set .WeekDist,0;		// Biweekly Reward Rotation.
 // -----------------------------------------------------------
 //  Reward options.
 // -----------------------------------------------------------
@@ -64,57 +45,7 @@ OnInit:
 	// -- when given directly: <itemID>,<amount>{,<itemID>,<amount>,...}
 	// -- via mail (option 2): <itemID>,<amount>,<Zeny>
 
-	if (gettime(4) == 1 && .WeekDist == 0) {
-	setarray .Reward[0],20521,1;
-	}
-	if (gettime(4) == 1 && .WeekDist == 1) {
-	setarray .Reward[0],20528,1;
-	}
-
-	if (gettime(4) == 2 && .WeekDist == 0) {
-	setarray .Reward[0],20522,1;
-	}
-	if (gettime(4) == 2 && .WeekDist == 1) {
-	setarray .Reward[0],20529,1;
-	}
-
-	if (gettime(4) == 3 && .WeekDist == 0) {
-	setarray .Reward[0],20523,1;
-	}
-	if (gettime(4) == 3 && .WeekDist == 1) {
-	setarray .Reward[0],20530,1;
-	}
-
-	if (gettime(4) == 4 && .WeekDist == 0) {
-	setarray .Reward[0],20524,1;
-	}
-	if (gettime(4) == 4 && .WeekDist == 1) {
-	setarray .Reward[0],20531,1;
-	}
-
-	if (gettime(4) == 5 && .WeekDist == 0) {
-	setarray .Reward[0],20525,1;
-	}
-	if (gettime(4) == 5 && .WeekDist == 1) {
-	setarray .Reward[0],20532,1;
-	}
-
-	if (gettime(4) == 6 && .WeekDist == 0) {
-	setarray .Reward[0],20526,1;
-	}
-	if (gettime(4) == 6 && .WeekDist == 1) {
-	setarray .Reward[0],20533,1;
-	}
-
-	if (gettime(4) == 0 && .WeekDist == 0) {
-	setarray .Reward[0],20527,1;
-	set .WeekDist,1;
-	}
-	if (gettime(4) == 0 && .WeekDist == 1) {
-	setarray .Reward[0],20534,1;
-	set .WeekDist,0;
-	}
-
+	setarray .Reward[0],38989,1;
 
 // -----------------------------------------------------------
 //  Constants (leave this section alone).
@@ -484,4 +415,45 @@ while(1) {
 	case 5:
 		close;
 	} }
+}
+
+-	script	Mode Switcher	-1,{
+OnInit:
+if (gettime(4) == 0){
+if (gettime(5) > 24){
+disablenpc "WOE Information";
+enablenpc "FW Information";
+end;
+}
+else {
+disablenpc "FW Information";
+enablenpc "WOE Information";
+end;
+}
+}
+else if (gettime(4) > 0){
+disablenpc "FW Information";
+enablenpc "WOE Information";
+end;
+}
+
+OnSun0000:
+if (gettime(5) > 24){
+disablenpc "WOE Information";
+enablenpc "FW Information";
+end;
+}
+else {
+end;
+}
+
+OnSun2230:
+if (gettime(5) > 24){
+disablenpc "FW Information";
+enablenpc "WOE Information";
+end;
+}
+else {
+end;
+}
 }
