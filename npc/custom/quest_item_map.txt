@@ -128,7 +128,7 @@ warp "geffen",187,115;
 }
 
 geffen,184,112,6	script	To Crafting	650,{
-warp "geffen",139,142;
+warp "geffen_in",139,142;
 }
 
 prt_castle,85,67,6	script	Quest Aide	650,{
